@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_loader.h                                       :+:      :+:    :+:   */
+/*   display_linux.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/30 23:13:01 by malhendi          #+#    #+#             */
-/*   Updated: 2025/10/30 23:13:03 by malhendi         ###   ########.fr       */
+/*   Created: 2025/10/30 23:11:30 by malhendi          #+#    #+#             */
+/*   Updated: 2025/10/30 23:11:33 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_LOADER_H
-# define MAP_LOADER_H
+#include "so_long.h"
 
-# include "so_long.h"
-
-t_mapinfo	load_map(const char *path);
-void		free_map(char **map);
-
-#endif
+void	destroy_display(t_app *a)
+{
+	if (a && a->mlx)
+	{
+		mlx_destroy_display(a->mlx);
+		free(a->mlx);
+		a->mlx = NULL;
+	}
+}

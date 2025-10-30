@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 02:33:06 by malhendi          #+#    #+#             */
-/*   Updated: 2025/10/28 02:33:07 by malhendi         ###   ########.fr       */
+/*   Created: 2025/10/30 23:12:34 by malhendi          #+#    #+#             */
+/*   Updated: 2025/10/30 23:12:36 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	try_step(t_app *a, int dx, int dy)
 	a->py = ny;
 	a->moves++;
 	a->dirty = 1;
-	printf("move: %d\n", a->moves);
+	ft_printf("move: %d\n", a->moves);
 	if (a->map[ny][nx] == 'C')
 	{
 		a->map[ny][nx] = '0';
@@ -35,7 +35,7 @@ static void	try_step(t_app *a, int dx, int dy)
 	}
 	if (a->map[ny][nx] == 'E' && a->collects == 0)
 	{
-		printf("GG in %d\n", a->moves);
+		ft_printf("GG in %d\n", a->moves);
 		close_game(a);
 	}
 }

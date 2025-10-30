@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 03:24:36 by malhendi          #+#    #+#             */
-/*   Updated: 2025/10/28 03:24:37 by malhendi         ###   ########.fr       */
+/*   Created: 2025/10/30 23:13:15 by malhendi          #+#    #+#             */
+/*   Updated: 2025/10/30 23:13:16 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,17 @@ void	free_map(char **m)
 		i++;
 	}
 	free(m);
+}
+
+int	copy_rows(char **dst, char **src, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	return (1);
 }

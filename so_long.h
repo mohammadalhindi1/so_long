@@ -5,18 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 02:31:53 by malhendi          #+#    #+#             */
-/*   Updated: 2025/10/28 02:32:02 by malhendi         ###   ########.fr       */
+/*   Created: 2025/10/30 23:13:25 by malhendi          #+#    #+#             */
+/*   Updated: 2025/10/30 23:13:26 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# include "ft_printf.h"
 # include "get_next_line.h"
 # include "mlx.h"
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -24,7 +24,10 @@
 #  define TILE 64
 # endif
 
-# define ENEMY_TICK 120
+# ifndef ENEMY_MS
+#  define ENEMY_MS 500
+# endif
+
 # define ASSET_DIR "assets/"
 
 # ifdef __APPLE__
@@ -112,13 +115,15 @@ typedef struct s_app
 	int		en_count;
 }			t_app;
 
-/* map_loader.c + map_utils.c + map_check.c */
+/* map_loader.c + map_utils.c + map_check.c + map_read.c */
 t_mapinfo	load_map(const char *path);
 void		free_map(char **map);
 int			slen(const char *s);
 char		*sddup(const char *s, int n);
 char		**read_rows(int fd, int *out_h, int *out_w);
 int			validate_map(char **r, int h, int w, t_mapinfo *o);
+void		free_rows_partial(char **r, int n);
+int			copy_rows(char **dst, char **src, int n);
 
 /* enemy.c + enemy_utils.c */
 void		enemies_init(t_app *a);
@@ -135,6 +140,8 @@ void		player_update(t_app *a);
 /* render.c + assets.c */
 void		load_images(t_app *a);
 void		render_all(t_app *a);
+void		destroy_images(t_app *a);
+void		destroy_display(t_app *a);
 
 /* main.c */
 int			close_game(t_app *a);

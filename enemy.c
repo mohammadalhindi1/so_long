@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 02:33:19 by malhendi          #+#    #+#             */
-/*   Updated: 2025/10/28 02:33:20 by malhendi         ###   ########.fr       */
+/*   Created: 2025/10/30 23:11:46 by malhendi          #+#    #+#             */
+/*   Updated: 2025/10/30 23:11:49 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include <sys/time.h>
 
-/* من enemy_utils.c */
 t_enemy		make_enemy(int x, int y, int dx, int dy);
 void		push_enemy(t_app *a, t_enemy e);
 int			can_step(t_app *a, int nx, int ny);
@@ -68,14 +68,27 @@ static int	move_enemy(t_app *a, t_enemy *e)
 	return (1);
 }
 
+static long	now_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000L + tv.tv_usec / 1000L);
+}
+
 int	enemies_update(t_app *a)
 {
-	int	i;
-	int	any;
+	static long	prev_ms;
+	long		cur;
+	int			i;
+	int			any;
 
-	if (++a->tick_e < ENEMY_TICK)
+	cur = now_ms();
+	if (prev_ms == 0)
+		prev_ms = cur;
+	if (cur - prev_ms < ENEMY_MS)
 		return (0);
-	a->tick_e = 0;
+	prev_ms = cur;
 	i = 0;
 	any = 0;
 	while (i < a->en_count)

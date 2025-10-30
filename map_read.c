@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 03:55:22 by malhendi          #+#    #+#             */
-/*   Updated: 2025/10/28 03:55:23 by malhendi         ###   ########.fr       */
+/*   Created: 2025/10/30 23:13:07 by malhendi          #+#    #+#             */
+/*   Updated: 2025/10/30 23:13:09 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,14 @@ static int	grow_rows(char ***rows, int *cap, int need)
 		newcap = newcap * 2;
 	while (newcap <= need)
 		newcap *= 2;
-	tmp = (char **)realloc(*rows, sizeof(char *) * newcap);
+	tmp = (char **)malloc(sizeof(char *) * newcap);
 	if (!tmp)
 		return (0);
+	if (*rows)
+	{
+		copy_rows(tmp, *rows, *cap);
+		free(*rows);
+	}
 	*rows = tmp;
 	*cap = newcap;
 	return (1);
@@ -70,6 +75,10 @@ static int	read_loop(int fd, char ***rows, int *cap, int *h)
 		if (!add_line(rows, cap, h, line))
 		{
 			free(line);
+			free_rows_partial(*rows, *h);
+			*rows = NULL;
+			*cap = 0;
+			*h = 0;
 			return (0);
 		}
 		free(line);
