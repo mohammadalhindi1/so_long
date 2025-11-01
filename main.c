@@ -41,14 +41,8 @@ static void	setup_app(t_app *a, t_mapinfo mi)
 	a->py = mi.py;
 	a->collects = mi.collects;
 	a->moves = 0;
-	a->keys.w = 0;
-	a->keys.a = 0;
-	a->keys.s = 0;
-	a->keys.d = 0;
 	a->en = NULL;
 	a->en_count = 0;
-	a->tick_p = 0;
-	a->tick_e = 0;
 	a->dirty = 1;
 	a->img.floor = NULL;
 	a->img.wall = NULL;
@@ -79,26 +73,14 @@ static int	start_window(t_app *a)
 int	close_game(t_app *a)
 {
 	if (!a)
-	{
 		exit(0);
-		return (0);
-	}
 	if (a->en)
-	{
 		free(a->en);
-		a->en = NULL;
-	}
 	if (a->map)
-	{
 		free_map(a->map);
-		a->map = NULL;
-	}
 	destroy_images(a);
 	if (a->mlx && a->win)
-	{
 		mlx_destroy_window(a->mlx, a->win);
-		a->win = NULL;
-	}
 	destroy_display(a);
 	exit(0);
 	return (0);

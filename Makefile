@@ -12,14 +12,13 @@
 
 NAME    := so_long
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -I. #-g3
+CFLAGS  := -Wall -Wextra -Werror -I.
 MLXFLAGS := -lmlx -lXext -lX11 -lm
-HEADERS = so_long.h ft_printf.h get_next_line.h map_loader.h
+HEADERS = so_long.h ft_printf.h get_next_line.h
 OBJ_DIR = obj
 GREEN   	= \033[0;32m
 RED    		= \033[0;31m
 RESET   	= \033[0m
-ARROW   	= ✔
 SRCS_COMMON := \
 	assets.c \
 	display_linux.c	\
@@ -46,7 +45,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) -o $(NAME)
-	@echo "$(GREEN)Done $(ARROW)$(RESET)"
+	@echo "$(GREEN)Done ✔$(RESET)"
 
 $(OBJ_DIR)/%.o: %.c $(HEADERS)
 	@mkdir -p $(dir $@)
@@ -55,12 +54,12 @@ $(OBJ_DIR)/%.o: %.c $(HEADERS)
 clean:
 	@echo "$(RED)Deleting $(OBJ_DIR)...$(RESET)"
 	@rm -rf $(OBJ_DIR)
-	@echo "$(RED)Done $(ARROW)$(RESET)"
+	@echo "$(RED)Done ✔$(RESET)"
 
 fclean: clean
 	@echo "$(RED)Deleting $(NAME)...$(RESET)"
 	@rm -f $(NAME)
-	@echo "$(RED)Done $(ARROW)$(RESET)"
+	@echo "$(RED)Done ✔$(RESET)"
 
 re: fclean all
 

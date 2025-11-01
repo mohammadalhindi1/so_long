@@ -54,14 +54,6 @@ typedef struct s_imgs
 	int		h;
 }			t_imgs;
 
-typedef struct s_keys
-{
-	int		w;
-	int		a;
-	int		s;
-	int		d;
-}			t_keys;
-
 typedef struct s_enemy
 {
 	int		x;
@@ -95,15 +87,13 @@ typedef struct s_app
 	int		py;
 	int		moves;
 	int		collects;
-	int		tick_p;
-	int		tick_e;
 	int		dirty;
-	t_keys	keys;
 	t_imgs	img;
 	t_enemy	*en;
 	int		en_count;
 }			t_app;
 
+/* flood-fill context */
 typedef struct s_ff
 {
 	char	**m;
@@ -113,7 +103,7 @@ typedef struct s_ff
 	int		hit_e;
 }			t_ff;
 
-/* map_loader.c + map_utils.c + map_check.c + map_read.c + map_path.c */
+/* map loader / utils */
 t_mapinfo	load_map(const char *path);
 void		free_map(char **map);
 int			slen(const char *s);
@@ -124,31 +114,27 @@ void		free_rows_partial(char **r, int n);
 int			copy_rows(char **dst, char **src, int n);
 int			validate_paths(char **r, int h, int w, t_mapinfo o);
 
-/* enemy.c + enemy_utils.c */
+/* enemies */
 void		enemies_init(t_app *a);
 int			enemies_update(t_app *a);
 int			player_dead(t_app *a);
 int			can_step(t_app *a, int nx, int ny);
 void		rev_dir(t_enemy *e);
+t_enemy		make_enemy(int x, int y, int dx, int dy);
+void		push_enemy(t_app *a, t_enemy e);
 
-/* input.c */
+/* input */
 int			on_key_down(int key, t_app *a);
 int			on_key_up(int key, t_app *a);
 void		player_update(t_app *a);
 
-/* render.c + assets.c */
+/* render / assets / display */
 void		load_images(t_app *a);
 void		render_all(t_app *a);
 void		destroy_images(t_app *a);
 void		destroy_display(t_app *a);
 
-/* main.c */
+/* main */
 int			close_game(t_app *a);
-
-/* enemy.c */
-t_enemy		make_enemy(int x, int y, int dx, int dy);
-void		push_enemy(t_app *a, t_enemy e);
-int			can_step(t_app *a, int nx, int ny);
-void		rev_dir(t_enemy *e);
 
 #endif
