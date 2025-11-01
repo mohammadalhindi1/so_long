@@ -9,10 +9,8 @@
 A small 2D game written in **C** using **MiniLibX (MLX)** — a minimal graphics **API (Application Programming Interface)**. The player (P) collects all collectibles (C) and exits through (E) without walking through walls (1). Empty tiles are (0).
 
 **Map Alphabet:**
-
-```
-0 → empty
-1 → wall
+```php
+0 → empty    1 → wall
 C → collectible
 E → exit
 P → player start
@@ -33,73 +31,41 @@ P → player start
 
 ```
 so_long/
-│── include/
-│   └── so_long.h
-│── src/
-│   ├── main.c
-│   ├── map_load.c
+├── assets.c
+├── display_linux.c
+├── enemy/
+│   ├── enemy.c
+│   └── enemy_utils.c
+├── input.c
+├── main.c
+├── map/
 │   ├── map_check.c
-│   ├── path_check.c
-│   ├── render.c
-│   ├── input.c
-│   └── free_all.c
-│── gnl/
+│   ├── map_loader.c
+│   ├── map_path.c      # flood fill (DFS)
+│   ├── map_read.c      # robust GNL wrapper (handles CRLF)
+│   └── map_utils.c
+├── print_get_next/
+│   ├── ft_conv_char_str.c
+│   ├── ft_conv_numbers.c
+│   ├── ft_printf.c
 │   ├── get_next_line.c
-│   ├── get_next_line_utils.c
-│   └── get_next_line.h
-│── maps/
-│   └── a.ber
-│── textures/
-│   ├── wall.xpm
-│   ├── floor.xpm
-│   ├── player.xpm
-│   ├── exit.xpm
-│   └── coin.xpm
+│   └── get_next_line_utils.c
+├── render.c
+├── so_long.h
+├── maps/
+│   ├── map.ber
+│   └── bonus.ber
 └── Makefile
 ```
 
-> Each function ≤ 25 lines, ≤ 5 functions per file (42 Norm). Split logic into small helpers.
-
----
-
-## ⚙️ Makefile Example
-
-**Linux (X11)**:
+## ⚙️ Makefile Build
 
 ```make
-NAME = so_long
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Ignl
-SRCS = src/main.c src/map_load.c src/map_check.c src/path_check.c \
-       src/render.c src/input.c src/free_all.c \
-       gnl/get_next_line.c gnl/get_next_line_utils.c
-OBJS = $(SRCS:.c=.o)
-MLX_FLAGS = -lmlx -lXext -lX11 -lm
-
-all: $(NAME)
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $@
-clean:
-	rm -f $(OBJS)
-fclean: clean
-	rm -f $(NAME)
-re: fclean all
-.PHONY: all clean fclean re
+make            # build
+make clean      # remove objects
+make fclean     # remove objects + binary
+make re         # full rebuild
 ```
-
-**macOS (OpenGL)**:
-
-```make
-MLX_FLAGS = -framework OpenGL -framework AppKit
-```
-
-**macOS (Metal)**:
-
-```make
-MLX_FLAGS = -framework Metal -framework MetalKit -framework Cocoa
-```
-
----
 
 ## 🧠 Header Example
 
@@ -307,18 +273,6 @@ valgrind --leak-check=full ./so_long maps/a.ber
 11111
 ```
 
----
-
-## ⚠️ Common Pitfalls
-
-* Relinking in Makefile → check rules.
-* Segfault on invalid map → add guards.
-* Mixed line endings (`\r`) → strip newlines.
-* Long functions → split into helpers.
-* Forgetting ESC/X hooks → always handle.
-
----
-
 ## 🧭 Quick Roadmap
 
 1. Open/close window with MLX.
@@ -342,5 +296,4 @@ valgrind --leak-check=full ./so_long maps/a.ber
 | **DFS/BFS** | Graph traversal algorithms        |
 
 ---
-
 **From Mohammad Alhindi**
