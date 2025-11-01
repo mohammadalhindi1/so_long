@@ -6,7 +6,7 @@
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 23:13:25 by malhendi          #+#    #+#             */
-/*   Updated: 2025/10/30 23:13:26 by malhendi         ###   ########.fr       */
+/*   Updated: 2025/11/01 00:53:39 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "mlx.h"
+# include <sys/time.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -30,27 +31,15 @@
 
 # define ASSET_DIR "assets/"
 
-# ifdef __APPLE__
-#  define KEY_ESC 53
-#  define KEY_W 13
-#  define KEY_A 0
-#  define KEY_S 1
-#  define KEY_D 2
-#  define KEY_UP 126
-#  define KEY_DOWN 125
-#  define KEY_LEFT 123
-#  define KEY_RIGHT 124
-# else
-#  define KEY_ESC 65307
-#  define KEY_W 119
-#  define KEY_A 97
-#  define KEY_S 115
-#  define KEY_D 100
-#  define KEY_UP 65362
-#  define KEY_DOWN 65364
-#  define KEY_LEFT 65361
-#  define KEY_RIGHT 65363
-# endif
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
 
 typedef struct s_imgs
 {
@@ -115,7 +104,16 @@ typedef struct s_app
 	int		en_count;
 }			t_app;
 
-/* map_loader.c + map_utils.c + map_check.c + map_read.c */
+typedef struct s_ff
+{
+	char	**m;
+	int		h;
+	int		w;
+	int		got_c;
+	int		hit_e;
+}			t_ff;
+
+/* map_loader.c + map_utils.c + map_check.c + map_read.c + map_path.c */
 t_mapinfo	load_map(const char *path);
 void		free_map(char **map);
 int			slen(const char *s);
@@ -124,6 +122,7 @@ char		**read_rows(int fd, int *out_h, int *out_w);
 int			validate_map(char **r, int h, int w, t_mapinfo *o);
 void		free_rows_partial(char **r, int n);
 int			copy_rows(char **dst, char **src, int n);
+int			validate_paths(char **r, int h, int w, t_mapinfo o);
 
 /* enemy.c + enemy_utils.c */
 void		enemies_init(t_app *a);
@@ -145,5 +144,11 @@ void		destroy_display(t_app *a);
 
 /* main.c */
 int			close_game(t_app *a);
+
+/* enemy.c */
+t_enemy		make_enemy(int x, int y, int dx, int dy);
+void		push_enemy(t_app *a, t_enemy e);
+int			can_step(t_app *a, int nx, int ny);
+void		rev_dir(t_enemy *e);
 
 #endif

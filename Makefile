@@ -1,51 +1,67 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/11/01 00:52:01 by malhendi          #+#    #+#              #
+#    Updated: 2025/11/01 01:17:21 by malhendi         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME    := so_long
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -I.
-
-UNAME_S := $(shell uname -s)
-
+CFLAGS  := -Wall -Wextra -Werror -I. #-g3
+MLXFLAGS := -lmlx -lXext -lX11 -lm
+HEADERS = so_long.h ft_printf.h get_next_line.h map_loader.h
+OBJ_DIR = obj
+GREEN   	= \033[0;32m
+RED    		= \033[0;31m
+RESET   	= \033[0m
+ARROW   	= ✔
 SRCS_COMMON := \
-	main.c \
-	render.c \
 	assets.c \
+	display_linux.c	\
+	enemy/enemy.c \
+	enemy/enemy_utils.c \
+	print_get_next/ft_conv_char_str.c \
+	print_get_next/ft_conv_numbers.c \
+	print_get_next/ft_printf.c \
+	print_get_next/get_next_line.c \
+	print_get_next/get_next_line_utils.c \
 	input.c \
-	enemy.c \
-	enemy_utils.c \
-	map_loader.c \
-	map_read.c \
-	map_utils.c \
-	map_check.c \
-	get_next_line.c \
-	get_next_line_utils.c \
-	ft_printf.c \
-	ft_conv_char_str.c \
-	ft_conv_numbers.c
+	main.c \
+	map/map_check.c \
+	map/map_loader.c \
+	map/map_read.c \
+	map/map_utils.c \
+	map/map_path.c \
+	render.c
 
-ifeq ($(UNAME_S), Darwin)
-	SRCS := $(SRCS_COMMON) display_apple.c
-	MLXFLAGS := -lmlx -framework OpenGL -framework AppKit
-else
-	SRCS := $(SRCS_COMMON) display_linux.c
-	MLXFLAGS := -lmlx -lXext -lX11 -lm
-endif
-
-OBJS := $(SRCS:.c=.o)
+SRCS := $(SRCS_COMMON) 
+OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) -o $(NAME)
+	@echo "$(GREEN)Done $(ARROW)$(RESET)"
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: %.c $(HEADERS)
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	@echo "$(RED)Deleting $(OBJ_DIR)...$(RESET)"
+	@rm -rf $(OBJ_DIR)
+	@echo "$(RED)Done $(ARROW)$(RESET)"
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "$(RED)Deleting $(NAME)...$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(RED)Done $(ARROW)$(RESET)"
 
 re: fclean all
 
 .PHONY: all clean fclean re
-

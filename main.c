@@ -114,16 +114,16 @@ int	main(int ac, char **av)
 		write(2, "Usage: ./so_long maps/level.ber\n", 32);
 		return (1);
 	}
-	mi.map = NULL;
+	mi = load_map(av[1]);
+	if (!mi.map)
+		return (1);
 	a.mlx = mlx_init();
 	if (!a.mlx)
 	{
 		write(2, "Error\nmlx_init failed\n", 22);
+		free_map(mi.map);
 		return (1);
 	}
-	mi = load_map(av[1]);
-	if (!mi.map)
-		return (close_game(&a), 1);
 	setup_app(&a, mi);
 	return (start_window(&a));
 }
