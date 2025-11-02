@@ -1,34 +1,24 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/11/01 00:52:01 by malhendi          #+#    #+#              #
-#    Updated: 2025/11/01 01:17:21 by malhendi         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME    := so_long
+
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -I.
+CFLAGS  := -Wall -Wextra -Werror -Iincludes -Iincludes/libft
 MLXFLAGS := -lmlx -lXext -lX11 -lm
-HEADERS = so_long.h ft_printf.h get_next_line.h
+
+SRCDIR  = srcs
 OBJ_DIR = obj
-GREEN   	= \033[0;32m
-RED    		= \033[0;31m
-RESET   	= \033[0m
+LIBPATH = includes/libft
+
+GREEN   = \033[0;32m
+RED     = \033[0;31m
+RESET   = \033[0m
+
+RM      = rm -rf
+
 SRCS_COMMON := \
 	assets.c \
 	display_linux.c	\
 	enemy/enemy.c \
 	enemy/enemy_utils.c \
-	print_get_next/ft_conv_char_str.c \
-	print_get_next/ft_conv_numbers.c \
-	print_get_next/ft_printf.c \
-	print_get_next/get_next_line.c \
-	print_get_next/get_next_line_utils.c \
 	input.c \
 	main.c \
 	map/map_check.c \
@@ -38,27 +28,30 @@ SRCS_COMMON := \
 	map/map_path.c \
 	render.c
 
-SRCS := $(SRCS_COMMON) 
-OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+SRCS := $(addprefix $(SRCDIR)/,$(SRCS_COMMON))
+OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) -o $(NAME)
+	@$(MAKE) -C $(LIBPATH)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBPATH) -lft $(MLXFLAGS) -o $(NAME)
 	@echo "$(GREEN)Done ✔$(RESET)"
 
-$(OBJ_DIR)/%.o: %.c $(HEADERS)
+$(OBJ_DIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	@$(MAKE) clean -C $(LIBPATH)
 	@echo "$(RED)Deleting $(OBJ_DIR)...$(RESET)"
-	@rm -rf $(OBJ_DIR)
+	@$(RM) $(OBJ_DIR)
 	@echo "$(RED)Done ✔$(RESET)"
 
 fclean: clean
+	@$(MAKE) fclean -C $(LIBPATH)
 	@echo "$(RED)Deleting $(NAME)...$(RESET)"
-	@rm -f $(NAME)
+	@$(RM) $(NAME)
 	@echo "$(RED)Done ✔$(RESET)"
 
 re: fclean all
