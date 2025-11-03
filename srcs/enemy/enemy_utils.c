@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "so_long.h"
 
 t_enemy	make_enemy(int x, int y, int dx, int dy)
 {

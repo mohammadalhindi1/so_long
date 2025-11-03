@@ -13,12 +13,13 @@
 NAME    := so_long
 
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -Iincludes -Iincludes/libft
+CFLAGS  := -Wall -Wextra -Werror -Iincludes -Iincludes/libft/includes
 MLXFLAGS := -lmlx -lXext -lX11 -lm
 
 SRCDIR  = srcs
 OBJ_DIR = obj
-LIBPATH = includes/libft
+LIBPATH = includes/libft/
+LIBFT	= $(LIBPATH)libft.a
 
 GREEN   = \033[0;32m
 RED     = \033[0;31m
@@ -44,11 +45,14 @@ SRCS_COMMON := \
 SRCS := $(addprefix $(SRCDIR)/,$(SRCS_COMMON))
 OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJ_DIR)/%.o)
 
+libft:
+	@$(MAKE) -C $(LIBPATH)
+
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(libft)
 	@$(MAKE) -C $(LIBPATH)
-	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBPATH) -lft $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBPATH) -lft $(MLXFLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Done ✔$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRCDIR)/%.c
