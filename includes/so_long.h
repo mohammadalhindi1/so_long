@@ -6,7 +6,7 @@
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 23:13:25 by malhendi          #+#    #+#             */
-/*   Updated: 2025/11/01 00:53:39 by malhendi         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:06:50 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_rows
 	char	**rows;
 	int		cap;
 	int		h;
-}	t_rows;
+}			t_rows;
 
 /* ----------------------- MAP -------------------------- */
 
@@ -146,9 +146,9 @@ void		enemies_init(t_app *a);
 int			enemies_update(t_app *a);
 int			player_dead(t_app *a);
 int			can_step(t_app *a, int nx, int ny);
+int			push_enemy(t_app *a, t_enemy e);
 void		rev_dir(t_enemy *e);
 t_enemy		make_enemy(int x, int y, int dx, int dy);
-void		push_enemy(t_app *a, t_enemy e);
 
 /* ----------------------- INPUT ------------------------ */
 

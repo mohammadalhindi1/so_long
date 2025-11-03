@@ -6,7 +6,7 @@
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 23:11:38 by malhendi          #+#    #+#             */
-/*   Updated: 2025/11/02 05:15:04 by malhendi         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:14:38 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static int	safe_mul_size(size_t a, size_t b, size_t *out)
 	return (1);
 }
 
-void	push_enemy(t_app *a, t_enemy e)
+int	push_enemy(t_app *a, t_enemy e)
+
 {
 	t_enemy	*old;
 	t_enemy	*tmp;
@@ -43,13 +44,13 @@ void	push_enemy(t_app *a, t_enemy e)
 	int		i;
 
 	if (!a || a->en_count < 0)
-		return ;
+		return (0);
 	old = a->en;
 	if (!safe_mul_size((size_t)(a->en_count + 1), sizeof(t_enemy), &bytes))
-		return ;
+		return (0);
 	tmp = (t_enemy *)malloc(bytes);
 	if (!tmp)
-		return ;
+		return (0);
 	i = 0;
 	while (i < a->en_count)
 	{
@@ -60,6 +61,7 @@ void	push_enemy(t_app *a, t_enemy e)
 	a->en = tmp;
 	a->en_count++;
 	free(old);
+	return (1);
 }
 
 int	can_step(t_app *a, int nx, int ny)

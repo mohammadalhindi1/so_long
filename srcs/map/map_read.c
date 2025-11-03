@@ -6,7 +6,7 @@
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 23:13:07 by malhendi          #+#    #+#             */
-/*   Updated: 2025/11/02 05:19:41 by malhendi         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:36:49 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,18 @@ static int	read_loop(int fd, t_rows *r)
 	return (reset_empty(r));
 }
 
+static	void	free_gnl(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free (line);
+		line = get_next_line(fd);
+	}
+}
+
 char	**read_rows(int fd, int *out_h, int *out_w)
 {
 	t_rows	r;
@@ -79,9 +91,13 @@ char	**read_rows(int fd, int *out_h, int *out_w)
 	r.cap = 0;
 	r.h = 0;
 	if (!read_loop(fd, &r))
+	{
+		free_gnl(fd);
 		return (NULL);
+	}
 	if (!rows_finalize(&r.rows, &r.cap, r.h))
 	{
+		free_gnl(fd);
 		free_rows_partial(r.rows, r.h);
 		return (NULL);
 	}

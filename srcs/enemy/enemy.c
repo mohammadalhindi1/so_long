@@ -6,7 +6,7 @@
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 23:11:46 by malhendi          #+#    #+#             */
-/*   Updated: 2025/11/01 00:53:20 by malhendi         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:13:09 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ void	enemies_init(t_app *a)
 		{
 			if (a->map[y][x] == 'V')
 			{
-				push_enemy(a, make_enemy(x, y, 0, 1));
+				if (!push_enemy(a, make_enemy(x, y, 0, 1)))
+					close_game(a);
 				a->map[y][x] = '0';
 			}
 			else if (a->map[y][x] == 'H')
 			{
-				push_enemy(a, make_enemy(x, y, 1, 0));
+				if (!push_enemy(a, make_enemy(x, y, 1, 0)))
+					close_game(a);
 				a->map[y][x] = '0';
 			}
 			x++;
