@@ -297,3 +297,7 @@ valgrind --leak-check=full ./so_long maps/a.ber
 
 ---
 **From Mohammad Alhindi**
+───────────────────────────────
+© 2025 Mohammad Alhindi — All Rights Reserved  
+Reusing or copying this code without permission is not cool — be original.
+───────────────────────────────
