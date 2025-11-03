@@ -14,20 +14,18 @@
 
 char	*ft_strdup(const char *src)
 {
-	int		i;
+	size_t	len;
 	char	*res;
 
-	i = ft_strlen(src);
-	res = malloc(sizeof(*res) * (i + 1));
-	if (res == NULL)
+	if (!src)
 		return (NULL);
-	i = 0;
-	while (src[i])
-	{
-		res[i] = src[i];
-		i++;
-	}
-	res[i] = '\0';
+	len = ft_strlen(src);
+	if (len > SIZE_MAX - 1)
+		return (NULL);
+	res = (char *)malloc(len + 1);
+	if (!res)
+		return (NULL);
+	ft_strlcpy(res, src, len + 1);
 	return (res);
 }
 

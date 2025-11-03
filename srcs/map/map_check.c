@@ -19,7 +19,7 @@ static int	is_rect(char **m, int h, int w)
 	y = 0;
 	while (y < h)
 	{
-		if (slen(m[y]) != w)
+		if ((int)ft_strlen(m[y]) != w)
 			return (0);
 		y++;
 	}

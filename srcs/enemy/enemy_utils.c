@@ -39,15 +39,15 @@ void	push_enemy(t_app *a, t_enemy e)
 {
 	t_enemy	*old;
 	t_enemy	*tmp;
-	size_t	sz;
+	size_t	bytes;
 	int		i;
 
 	if (!a || a->en_count < 0)
 		return ;
 	old = a->en;
-	if (!safe_mul_size((size_t)(a->en_count + 1), sizeof(t_enemy), &sz))
+	if (!safe_mul_size((size_t)(a->en_count + 1), sizeof(t_enemy), &bytes))
 		return ;
-	tmp = (t_enemy *)malloc(sz);
+	tmp = (t_enemy *)malloc(bytes);
 	if (!tmp)
 		return ;
 	i = 0;

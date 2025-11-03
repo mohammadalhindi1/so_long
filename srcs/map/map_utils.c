@@ -6,22 +6,22 @@
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 23:13:15 by malhendi          #+#    #+#             */
-/*   Updated: 2025/11/02 05:20:05 by malhendi         ###   ########.fr       */
+/*   Updated: 2025/11/03 05:13:15 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int	slen(const char *s)
+int	trim_newline_len(char *line)
 {
-	int	i;
+	int	len;
 
-	if (!s)
+	if (!line)
 		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	len = (int)ft_strlen(line);
+	while (len > 0 && (line[len - 1] == '\n' || line[len - 1] == '\r'))
+		len--;
+	return (len);
 }
 
 char	*sddup(const char *s, int n)
@@ -30,6 +30,8 @@ char	*sddup(const char *s, int n)
 	int		i;
 
 	if (!s || n < 0)
+		return (NULL);
+	if ((size_t)n == (size_t)-1)
 		return (NULL);
 	p = (char *)malloc((size_t)n + 1);
 	if (!p)

@@ -14,29 +14,31 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*new;
 	size_t	slen;
-	size_t	finish;
+	size_t	real_len;
+	char	*new_s;
 
 	if (!s)
 		return (NULL);
 	slen = ft_strlen(s);
 	if (start >= slen)
 	{
-		new = (char *)malloc(1);
-		if (!new)
+		new_s = (char *)malloc(1);
+		if (!new_s)
 			return (NULL);
-		new[0] = '\0';
-		return (new);
+		new_s[0] = '\0';
+		return (new_s);
 	}
-	finish = slen - start;
-	if (finish > len)
-		finish = len;
-	new = (char *)malloc(sizeof(char) * (finish + 1));
-	if (!new)
+	real_len = slen - start;
+	if (real_len > len)
+		real_len = len;
+	if (real_len > SIZE_MAX - 1)
 		return (NULL);
-	ft_strlcpy(new, s + start, finish + 1);
-	return (new);
+	new_s = (char *)malloc(real_len + 1);
+	if (!new_s)
+		return (NULL);
+	ft_strlcpy(new_s, s + start, real_len + 1);
+	return (new_s);
 }
 
 /*

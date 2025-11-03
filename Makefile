@@ -21,6 +21,7 @@ SRCS_COMMON := \
 	enemy/enemy_utils.c \
 	input.c \
 	main.c \
+	map/map_alloc.c \
 	map/map_check.c \
 	map/map_loader.c \
 	map/map_read.c \

@@ -6,7 +6,7 @@
 /*   By: malhendi <malhendi@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 02:20:11 by malhendi          #+#    #+#             */
-/*   Updated: 2025/11/02 05:17:58 by malhendi         ###   ########.fr       */
+/*   Updated: 2025/11/03 05:10:32 by malhendi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	**clone_map(char **r, int h)
 	y = 0;
 	while (y < h)
 	{
-		c[y] = sddup(r[y], slen(r[y]));
+		c[y] = sddup(r[y], (int)ft_strlen(r[y]));
 		if (!c[y])
 		{
 			free_rows_partial(c, y);

@@ -30,10 +30,12 @@ static int	read_to_nl_eof(int fd, char **stash)
 	char	*buf;
 	ssize_t	br;
 
-	br = 0;
+	if ((size_t)BUFFER_SIZE > SIZE_MAX - 1)
+		return (-1);
 	buf = (char *)malloc((size_t)BUFFER_SIZE + 1);
 	if (!buf)
 		return (-1);
+	br = 0;
 	while (!ft_strchr(*stash, '\n'))
 	{
 		br = read(fd, buf, BUFFER_SIZE);
@@ -106,7 +108,6 @@ char	*get_next_line(int fd)
 	{
 		free(stash);
 		stash = NULL;
-		return (NULL);
 	}
 	return (line);
 }
