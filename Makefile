@@ -10,11 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME    := so_long
+NAME     = so_long
 
-CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -Iincludes -Iincludes/libft/includes
-MLXFLAGS := -lmlx -lXext -lX11 -lm
+CC       = cc
+CFLAGS   = -Wall -Wextra -Werror -Iincludes -Iincludes/libft/includes
+MLXFLAGS = -lmlx -lXext -lX11 -lm
 
 SRCDIR  = srcs
 OBJ_DIR = obj
@@ -42,8 +42,8 @@ SRCS_COMMON := \
 	map/map_path.c \
 	render.c
 
-SRCS := $(addprefix $(SRCDIR)/,$(SRCS_COMMON))
-OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJ_DIR)/%.o)
+SRCS = $(addprefix $(SRCDIR)/,$(SRCS_COMMON))
+OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJ_DIR)/%.o)
 
 libft:
 	@$(MAKE) -C $(LIBPATH)
